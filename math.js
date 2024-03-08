@@ -1,0 +1,16 @@
+const number = 5.5559
+const result =  Math.floor(number)
+const result1 = Math.ceil(number)
+const result2 = Math.sqrt(4)
+const result3 = Math.min(4,4,6,3,2)
+const result4 = Math.max(4,7,7,54,45)
+const result5 = Math.random()
+const result6 = Math.floor(Math.random()*100+1) // or
+// const result6 =Math.ceil(Math.random()*100) 
+console.log(result)
+console.log(result1)
+console.log(result2)
+console.log(result3)
+console.log(result4)
+console.log(result5)
+console.log(result6)
