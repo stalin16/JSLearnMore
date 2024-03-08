@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&family=Poppins:wght@200;300;400;700&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif, "Odor Mean Chey", serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: rgb(227, 248, 255);
+}
+
+.btn {
+  font-size: 3rem;
+  text-transform: capitalize;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  color: rgba(0, 0, 0, 0.7);
+  background: rgba(255, 255, 255, 0.5);
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn:hover {
+  box-shadow: 2px 2px 20px rgb(233, 233, 233);
+  background: white;
+}
+    </style>
+</head>
+<body>
+    <button class="btn">Change Color</button>
+</body>
+<script>
+const colors = ['red','green','pink','blue','#a41c96','rgb(214,182,23)']
+const button = document.querySelector('.btn')
+
+function getrandomnum(){
+    return Math.floor(Math.random()*colors.length)
+}
+
+button.addEventListener('keydown', () => {
+    // const randomindex = Math.floor(Math.random()*colors.length)
+    const randomindex = getrandomnum()
+    document.body.style.backgroundColor = colors[randomindex]
+})
+// document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]
+console.log(getrandomnum())
+</script>
+</html>

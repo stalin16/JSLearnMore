@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+@import url("https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&family=Poppins:wght@200;300;400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poppins", sans-serif, "Odor Mean Chey", serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: rgba(51, 54, 56, 0.497);
+}
+.slide-container {
+  position: relative;
+}
+
+.img-wrapper {
+  position: relative;
+  width: 700px;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.img-wrapper > img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.img-wrapper > img:not(.active) {
+  left: -100%;
+}
+.btn-container {
+  position: absolute;
+  top: 45%;
+  width: 100%;
+}
+
+.btn-container > button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  border: none;
+  outline: none;
+  backdrop-filter: blur(50px);
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 50px rgb(210, 210, 210);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: grey;
+}
+.btn-container > button:hover {
+  color: rgb(49, 49, 49);
+  box-shadow: 0 0 30px rgb(196, 196, 196);
+  background: rgba(255, 255, 255, 0.8);
+}
+.btn-container > button:first-child {
+  position: absolute;
+  z-index: 100;
+  left: 25px;
+}
+.btn-container > button:last-child {
+  position: absolute;
+  z-index: 100;
+  right: 25px;
+}
+
+.dots-container {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 118px;
+  display: flex;
+  justify-content: center;
+  backdrop-filter: blur(50px);
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 100px;
+  padding: 5px 0;
+  gap: 0.5rem;
+}
+.dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease-out;
+}
+.dot.active {
+  width: 40px;
+  border-radius: 100px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes nextOut {
+  from {
+    left: 0%;
+  }
+  to {
+    left: -100%;
+  }
+}
+@keyframes nextIn {
+  from {
+    left: 100%;
+  }
+  to {
+    left: 0;
+  }
+}
+@keyframes prevOut {
+  from {
+    left: 0%;
+  }
+  to {
+    left: 100%;
+  }
+}
+@keyframes prevIn {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 0%;
+  }
+}
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="img-wrapper">
+            <img src="img/5.jpg" class="active" alt="">
+            <img src="img/6.jpg" alt="">
+            <img src="img/7.jpg" alt="">
+            <img src="img/8.jpg" alt="">
+        </div>
+        <div class="btn-container">
+            <button class="prev"><i class="fa-solid fa-angle-left"></i></button>
+            <button class="next"><i class="fa-solid fa-angle-right"></i></button>
+        </div>
+        <div class="dots-container">
+            <div class="dot active" attr="0"></div>
+            <div class="dot" attr="1"></div>
+            <div class="dot" attr="2"></div>
+            <div class="dot" attr="3"></div>
+        </div>
+    </div>
+</body>
+<script>
+const images = document.querySelectorAll(".img-wrapper > img")
+const nextbtn = document.querySelector('.next')
+const prevbtn = document.querySelector('.prev')
+const alldots = document.querySelectorAll('.dot')
+
+let counter = 0;
+nextbtn.addEventListener('click',nextslide)
+function nextslide(){
+  images[counter].style.animation = 'nextOut 0.5s forwards'
+  if(counter >= images.length - 1){
+    counter = 0
+  } else {
+    counter++
+  }
+  images[counter].style.animation = 'nextIn 0.5s forwards'
+  pointerdot()
+} 
+
+prevbtn.addEventListener('click',prevslide)
+function prevslide(){
+  images[counter].style.animation = 'prevOut 0.5s forwards'
+  if(counter == 0){
+    counter = images.length -1
+  } else {
+    counter--
+  }
+  images[counter].style.animation = 'prevIn 0.5s forwards'
+  pointerdot()
+} 
+
+function autosliding(){
+  deleteinterval = setInterval(function(){
+  nextslide()
+  pointerdot()
+}, 1000)
+}
+autosliding()
+
+const slidecontainer = document.querySelector('.slide-container')
+slidecontainer.addEventListener('mouseover',function(){
+  clearInterval(deleteinterval)
+})
+slidecontainer.addEventListener('mouseleave',function(){
+  autosliding()
+})
+
+function pointerdot(){
+  for(let i=0;i<alldots.length;i++){
+    alldots[i].className = alldots[i].className.replace('active','')
+  }
+  alldots[counter].className += ' active'
+}
+
+alldots.forEach(function(dot){
+  dot.addEventListener('click', function(e){
+    e.currentTarget.classList.add('active')
+    const dotindex = e.currentTarget.getAttribute('attr')
+    if(dotindex > counter){
+      images[counter].style.animation = 'nextOut 0.5s forwards'
+      counter = dotindex
+      images[counter].style.animation = 'nextIn 0.5s forwards'
+    } else if(dotindex == counter){
+      return 
+    } else {
+      images[counter].style.animation = 'prevOut 0.5s forwards'
+      counter = dotindex
+      images[counter].style.animation = 'prevIn 0.5s forwards'
+    }
+    pointerdot()
+  })
+})
+
+
+
+
+
+
+
+</script>
+</html>
